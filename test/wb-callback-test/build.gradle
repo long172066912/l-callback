@@ -1,0 +1,14 @@
+dependencies {
+    api project(':callback:wb-callback-service')
+    api project(':callback:impl:l-callback-default-service')
+    api project(':sdk:wb-callback-sdk-base')
+    api project(':sdk:wb-callback-sdk-mq-starter')
+    api project(':sdk:wb-callback-sdk-http-starter')
+    testImplementation group: 'org.mockito', name: 'mockito-inline', version: '4.5.1'
+}
+
+
+test {
+    jvmArgs = ["-Dapollo.app.id=callback", "-Dapollo.configService=http://apollo-configservice.wb-dev.com:30002/", "-Dwb.appname=callback", "-Dwb.env=develop", "-Dspring.profiles.active=local,default"]
+    useJUnitPlatform()
+}

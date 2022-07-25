@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: callback-worker
+server:
+  tomcat:
+    mbeanregistry:
+      enabled: true
+management:
+  health:
+    db:
+      enabled: false

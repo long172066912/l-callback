@@ -1,0 +1,17 @@
+dependencies {
+    implementation('org.springframework.boot:spring-boot-starter-actuator')
+    implementation 'org.apache.commons:commons-lang3'
+
+    implementation 'com.wanba:wb-db-mybatis'
+    implementation 'com.wanba:wb-sensor'
+    compileOnly 'org.springframework.boot:spring-boot-starter'
+    compile 'com.wanba.base:wb-base-component-starter'
+    implementation group: 'com.github.ben-manes.caffeine', name: 'caffeine', version: '2.8.8'
+    api project(':callback:wb-callback-common')
+}
+
+
+test {
+    jvmArgs = ["-Dapollo.app.id=callback", "-Dapollo.configService=http://apollo-configservice.wb-dev.com:30002/", "-Dwb.appname=callback", "-Dwb.env=develop", "-Dspring.profiles.active=local,default"]
+    useJUnitPlatform()
+}

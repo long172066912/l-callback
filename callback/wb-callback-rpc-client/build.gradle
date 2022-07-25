@@ -1,0 +1,14 @@
+
+// 版本 默认使用 根目录下指定的版本，可以自定义版本进行覆盖
+// version '1.0-SNAPSHOT'
+
+// jar 包名称
+archivesBaseName = "${project.name}"
+
+// 定义自己的依赖
+dependencies {
+    implementation 'com.wanba.rpc:wb-rpc-client'
+    implementation 'javax.validation:validation-api'
+    api project(':callback:wb-callback-common')
+}
+

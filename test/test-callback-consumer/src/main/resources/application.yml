@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: callback-consumer
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+management:
+  health:
+    db:
+      enabled: false
+server:
+  tomcat:
+    mbeanregistry:
+      enabled: true

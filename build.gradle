@@ -1,0 +1,96 @@
+buildscript {
+    println "gradle version : ${gradle.gradleVersion}"
+
+    // 设置全局的 springBoot 版本
+    rootProject.ext['springBootVersion'] = "2.5.7"
+    println "spring boot version : ${rootProject.ext['springBootVersion']}"
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        // 引入spring-boot-gradle 插件，注意：该插件 2.1.18 以后的版本不支持 gradle 4.8 及以下的版本
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${rootProject.ext.springBootVersion}")
+    }
+}
+
+
+// 加载 dep.gradle 文件，该文件中定义了依赖的配置
+apply from: "dep.gradle"
+
+// 项目中所有 module 的默认 group 和 version ，module 的build 中自己声明，可以进行覆盖
+allprojects {
+    version= '1.0-SNAPSHOT'
+    group= 'com.wb.pf'
+}
+
+// 所有子模块的配置
+subprojects {
+    // java 插件
+    apply plugin: 'java'
+    // java-library 主要是使用其中 api 的依赖方式
+    apply plugin: 'java-library'
+
+    // jdk 版本声明
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    // 仓库地址
+    repositories {
+        mavenCentral()
+    }
+
+    // 应用 spring-boot-gradle 的依赖管理插件
+    apply plugin: 'io.spring.dependency-management'
+
+
+    // 配置依赖中排除 log4j
+    configurations {
+        implementation {
+            exclude module: 'slf4j-log4j12'
+        }
+    }
+
+    // 引入spring boot dependency 的声明
+    dependencyManagement {
+        imports {
+            mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
+        }
+    }
+
+    // 引入自定义声明，需要注意顺序必须在 spring boot 的声明下面，这样优先级高，可以覆盖 spring boot 的声明
+    dependencyManagement rootProject.ext.dependencyManagementCustom
+
+    // 全局的默认依赖
+    dependencies {
+        compile project(':rpc:wb-rpc-common')
+        // lombok
+        annotationProcessor "org.projectlombok:lombok"
+        implementation "org.projectlombok:lombok"
+
+        implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
+
+        // mapstruct
+        implementation 'org.mapstruct:mapstruct'
+        annotationProcessor 'org.mapstruct:mapstruct-processor'
+        testAnnotationProcessor "org.mapstruct:mapstruct-processor"
+    }
+
+    // 约定 api  manager  server  worker wmp 后缀的 module 使用 spring-boot 的框架，声明对应的配置
+    if (!project.name.contains("-common") || !project.name.contains("-model")) {
+
+        // service 是属于内部包不能使用 spring-boot-gradle 的插件，如果使用的话会造成依赖有问题
+        if (!project.name.contains("-service") && !project.name.contains("-starter") && !project.name.contains("-test")) {
+            // 应用 spring-boot-gradle 的插件
+            apply plugin: "org.springframework.boot"
+        }
+        // 默认依赖
+        dependencies {
+            // 测试依赖
+            testImplementation 'org.springframework.boot:spring-boot-starter-test'
+            testImplementation 'org.mockito:mockito-core'
+        }
+
+    }
+}

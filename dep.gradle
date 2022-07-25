@@ -1,0 +1,14 @@
+ext.dependencyManagementCustom = {
+    dependencies {
+       // =============================================    三方依赖    =====================================================
+        dependencySet(group: 'org.mapstruct', version: '1.4.2.Final') {
+            entry 'mapstruct'
+            entry 'mapstruct-processor'
+        }
+        dependency 'mysql:mysql-connector-java:5.1.49'
+        dependencySet(group: 'org.aspectj', version: '1.9.7') {
+            entry 'aspectjweaver'
+        }
+        dependency 'javax.validation:validation-api:2.0.1.Final'
+    }
+}

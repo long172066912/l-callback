@@ -1,0 +1,15 @@
+plugins {
+    id 'java'
+    id 'maven'
+}
+
+group 'com.wanba.rpc'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+dependencies {
+    compile project(':rpc:wb-rpc-client')
+    implementation('io.micrometer:micrometer-registry-prometheus')
+    implementation('org.springframework.boot:spring-boot-starter-web')
+}

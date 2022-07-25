@@ -1,0 +1,30 @@
+
+rootProject.name = 'l-callback'
+
+//rpc调用
+include ':rpc:wb-rpc-client'
+include ':rpc:wb-rpc-common'
+include ':rpc:wb-rpc-server'
+
+//回调服务
+include ':callback:wb-callback-common'
+include ':callback:wb-callback-worker'
+include ':callback:wb-callback-rpc-client'
+include ':callback:wb-callback-server'
+include ':callback:wb-callback-service'
+//回调服务默认实现
+include ':callback:impl:l-callback-default-service'
+
+//回调本地自测
+include ':test:test-callback-producer'
+include ':test:test-callback-consumer'
+include ':test:test-callback-mq-consumer'
+//单测
+include ':test:wb-callback-test'
+
+//sdk
+include ':sdk:wb-callback-sdk-base'
+include ':sdk:wb-callback-sdk-client'
+include ':sdk:wb-callback-sdk-mq-starter'
+include ':sdk:wb-callback-sdk-http-starter'
+

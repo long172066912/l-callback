@@ -1,0 +1,23 @@
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'com.wanba:wb-kafka'
+    implementation 'com.wanba:wb-mq:1.0-SNAPSHOT'
+    implementation project(':callback:impl:l-callback-default-service')
+}
+ext {
+    mainClassStr = 'com.wb.base.callback.worker.Application'
+}
+bootJar {
+    manifest {
+        attributes 'Start-Class': mainClassStr
+    }
+    mainClassName = mainClassStr
+}
+
+
+bootRun {
+    main = mainClassStr
+    systemProperties = System.properties as Map<String, ?>
+    jvmArgs = ["-Dapollo.app.id=callback", "-Dapollo.configService=http://apollo-configservice.wb-dev.com:30002/", "-Dwb.appname=callback", "-Dwb.env=develop", "-Dspring.profiles.active=local,default"]
+}

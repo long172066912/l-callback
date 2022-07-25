@@ -1,0 +1,31 @@
+
+// 定义自己的依赖
+dependencies {
+
+    //运维监控点
+    implementation 'com.wanba.rpc:wb-rpc-server'
+    implementation('io.micrometer:micrometer-registry-prometheus')
+    implementation('org.springframework.boot:spring-boot-starter-web')
+    implementation('org.springframework.boot:spring-boot-starter-validation')
+    implementation 'javax.validation:validation-api'
+
+    implementation project(':callback:wb-callback-rpc-client')
+    implementation project(':callback:impl:l-callback-default-service')
+}
+
+ext {
+    mainClassStr = 'com.wb.rpc.server.Application'
+}
+
+bootJar {
+    manifest {
+        attributes 'Start-Class': mainClassStr
+    }
+    mainClassName = mainClassStr
+}
+
+bootRun {
+    main = mainClassStr
+    systemProperties = System.properties as Map<String, ?>
+    jvmArgs = ["-Dserver.port=8082", "-Dapollo.app.id=callback", "-Dapollo.configService=http://apollo-configservice.wb-dev.com:30002/", "-Dwb.appname=callback-server", "-Dwb.env=develop", "-Dspring.profiles.active=local,default"]
+}

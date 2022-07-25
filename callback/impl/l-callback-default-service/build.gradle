@@ -1,0 +1,9 @@
+
+dependencies {
+    api project(':callback:wb-callback-service')
+    implementation 'com.wanba:wb-kafka'
+    implementation 'com.wanba:wb-cache'
+    implementation 'com.wanba:wb-mq:1.0-SNAPSHOT'
+    implementation 'com.wanba:wb-db-mybatis'
+    implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '3.14.9'
+}
