@@ -1,0 +1,7 @@
+
+dependencies {
+    api project(':sdk:l-callback-sdk-base')
+    api project(':callback:l-callback-common')
+    implementation('org.springframework.boot:spring-boot-starter-web')
+    implementation('org.springframework.boot:spring-boot-starter-validation')
+}

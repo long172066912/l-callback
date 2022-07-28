@@ -1,9 +1,8 @@
 
 dependencies {
-    api project(':callback:wb-callback-service')
-    implementation 'com.wanba:wb-kafka'
-    implementation 'com.wanba:wb-cache'
-    implementation 'com.wanba:wb-mq:1.0-SNAPSHOT'
-    implementation 'com.wanba:wb-db-mybatis'
-    implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '3.14.9'
+    api project(':rpc:l-rpc-client')
+    api project(':callback:l-callback-service')
+    implementation group: 'com.squareup.okhttp3', name: 'okhttp'
+    implementation 'com.baomidou:mybatis-plus:3.3.2'
+    implementation 'com.baomidou:mybatis-plus-generator:3.4.1'
 }

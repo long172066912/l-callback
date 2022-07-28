@@ -1,5 +1,0 @@
-
-dependencies {
-    api project(':sdk:wb-callback-sdk-base')
-    implementation 'com.wanba:wb-kafka'
-}

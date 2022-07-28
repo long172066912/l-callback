@@ -1,0 +1,28 @@
+
+// 定义自己的依赖
+dependencies {
+    implementation project(':rpc:l-rpc-server')
+    implementation project(':callback:l-callback-rpc-client')
+    implementation project(':callback:impl:l-callback-default-service')
+
+    implementation('org.springframework.boot:spring-boot-starter-web')
+    implementation('org.springframework.boot:spring-boot-starter-validation')
+    implementation 'javax.validation:validation-api'
+}
+
+ext {
+    mainClassStr = 'com.callback.base.server.Application'
+}
+
+bootJar {
+    manifest {
+        attributes 'Start-Class': mainClassStr
+    }
+    mainClassName = mainClassStr
+}
+
+bootRun {
+    main = mainClassStr
+    systemProperties = System.properties as Map<String, ?>
+    jvmArgs = ["-Dserver.port=8082", "-Dspring.profiles.active=local,default"]
+}

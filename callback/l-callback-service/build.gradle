@@ -1,0 +1,10 @@
+dependencies {
+    api project(':rpc:l-rpc-common')
+    api project(':callback:l-callback-common')
+    compile 'org.springframework.boot:spring-boot-starter'
+    compile('org.springframework.boot:spring-boot-starter-actuator')
+    compile 'org.apache.commons:commons-lang3'
+
+    compile group: 'com.github.ben-manes.caffeine', name: 'caffeine', version: '2.8.8'
+    compile group: 'com.google.guava', name: 'guava'
+}

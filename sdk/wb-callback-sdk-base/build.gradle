@@ -1,8 +1,0 @@
-
-dependencies {
-    api project(':callback:wb-callback-common')
-    api project(':callback:wb-callback-rpc-client')
-    implementation 'com.wanba.rpc:wb-rpc-client'
-    implementation 'com.wanba.rpc:wb-rpc-server'
-    compile 'com.wanba:wb-common'
-}

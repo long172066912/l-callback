@@ -1,0 +1,9 @@
+
+dependencies {
+    api project(':sdk:l-callback-sdk-base')
+    implementation group: 'com.google.guava', name: 'guava'
+
+    // lombok
+    annotationProcessor "org.projectlombok:lombok"
+    implementation "org.projectlombok:lombok"
+}

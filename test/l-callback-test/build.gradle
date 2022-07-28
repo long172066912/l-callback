@@ -1,0 +1,14 @@
+dependencies {
+    api project(':callback:l-callback-service')
+    api project(':callback:impl:l-callback-default-service')
+    api project(':sdk:l-callback-sdk-base')
+    api project(':sdk:l-callback-sdk-mq-starter')
+    api project(':sdk:l-callback-sdk-http-starter')
+    testImplementation group: 'org.mockito', name: 'mockito-inline', version: '4.5.1'
+}
+
+
+test {
+    jvmArgs = ["-Dspring.profiles.active=local,default"]
+    useJUnitPlatform()
+}

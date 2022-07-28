@@ -19,10 +19,10 @@
     </appender>
 
     <!-- 日志文件 -->
-    <appender name="WB_STDERR" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOG_DIR}/wb_service_stderr.log</file>
+    <appender name="L_STDERR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/l_service_stderr.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_DIR}/wb_service_stderr.log.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <fileNamePattern>${LOG_DIR}/l_service_stderr.log.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <maxHistory>30</maxHistory>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>500MB</maxFileSize>
@@ -37,10 +37,10 @@
         </encoder>
     </appender>
 
-    <appender name="WB_STDOUT" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOG_DIR}/wb_service_stdout.log</file>
+    <appender name="L_STDOUT" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/l_service_stdout.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_DIR}/wb_service_stdout.log.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <fileNamePattern>${LOG_DIR}/l_service_stdout.log.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <maxHistory>30</maxHistory>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>500MB</maxFileSize>
@@ -51,56 +51,6 @@
             <charset>UTF-8</charset>
         </encoder>
     </appender>
-
-    <!-- 日志other文件 -->
-    <appender name="DB-APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOG_DIR}/other/wb_db_stdout.log</file>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_DIR}/other/wb_db_stdout.log.%d{yyyy-MM-dd}</fileNamePattern>
-            <maxHistory>30</maxHistory>
-        </rollingPolicy>
-        <encoder>
-            <pattern>${logPattern}</pattern>
-            <charset>UTF-8</charset>
-        </encoder>
-    </appender>
-
-    <appender name="DATA_STATIS" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOG_DIR}/other/wb_data_statis.log</file>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_DIR}/other/wb_data_statis.log.%d{yyyy-MM-dd}</fileNamePattern>
-            <maxHistory>30</maxHistory>
-        </rollingPolicy>
-        <encoder>
-            <pattern>${logPattern}</pattern>
-            <charset>UTF-8</charset>
-        </encoder>
-    </appender>
-
-    <appender name="MS_CLIENT" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOG_DIR}/other/wb_msclient_stdout.log</file>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_DIR}/other/wb_msclient_stdout.log.%d{yyyy-MM-dd}</fileNamePattern>
-            <maxHistory>30</maxHistory>
-        </rollingPolicy>
-        <encoder>
-            <pattern>${logPattern}</pattern>
-            <charset>UTF-8</charset>
-        </encoder>
-    </appender>
-
-    <appender name="MONITOR-APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOG_DIR}/other/wb_monitor_stdout.log</file>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_DIR}/other/wb_monitor_stdout.log.%d{yyyy-MM-dd}</fileNamePattern>
-            <maxHistory>30</maxHistory>
-        </rollingPolicy>
-        <encoder>
-            <pattern>${logPattern}</pattern>
-            <charset>UTF-8</charset>
-        </encoder>
-    </appender>
-
 
     <!-- per4j日志文件 -->
     <appender name="PER4J-APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -135,44 +85,26 @@
         <appender-ref ref="DB-PER4J-APPENDER"/>
     </appender>
 
-
-    <!-- monitor -->
-    <logger name="com.wb.microclient" level="INFO" additivity="false">
-        <appender-ref ref="MS_CLIENT"/>
-    </logger>
-
     <!-- perf4j -->
     <logger name="org.perf4j.TimingLogger" level="INFO" additivity="false">
         <appender-ref ref="COALESCING-STATISTICS"/>
     </logger>
 
-    <logger name="com.wb.db.perf4j.TimingLogger" level="INFO" additivity="false">
-        <appender-ref ref="DB-COALESCING-STATISTICS"/>
-    </logger>
-
     <!-- 常规 -->
-    <logger name="com.wb" level="INFO" additivity="false">
+    <logger name="com.callback" level="INFO" additivity="false">
         <springProfile name="local">
             <appender-ref ref="STDOUT"/>
         </springProfile>
-        <appender-ref ref="WB_STDOUT"/>
-        <appender-ref ref="WB_STDERR"/>
-    </logger>
-
-    <logger name="com.wb.db" level="INFO" additivity="false">
-        <appender-ref ref="DB-APPENDER"/>
-    </logger>
-
-    <logger name="data_statis" level="INFO" additivity="false">
-        <appender-ref ref="DATA_STATIS"/>
+        <appender-ref ref="L_STDOUT"/>
+        <appender-ref ref="L_STDERR"/>
     </logger>
 
     <root level="INFO">
         <springProfile name="local">
             <appender-ref ref="STDOUT"/>
         </springProfile>
-        <appender-ref ref="WB_STDOUT"/>
-        <appender-ref ref="WB_STDERR"/>
+        <appender-ref ref="L_STDOUT"/>
+        <appender-ref ref="L_STDERR"/>
     </root>
 
 </configuration>

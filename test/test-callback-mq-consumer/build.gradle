@@ -3,16 +3,16 @@
 dependencies {
 
     //运维监控点
-    implementation 'com.wanba.rpc:wb-rpc-server'
+    implementation ':rpc:l-rpc-server'
+    implementation project(':sdk:l-callback-sdk-mq-starter')
     implementation('io.micrometer:micrometer-registry-prometheus')
     implementation('org.springframework.boot:spring-boot-starter-web')
     implementation('org.springframework.boot:spring-boot-starter-validation')
     implementation 'javax.validation:validation-api'
-    implementation project(':sdk:wb-callback-sdk-mq-starter')
 }
 
 ext {
-    mainClassStr = 'com.wb.rpc.server.Application'
+    mainClassStr = 'com.l.rpc.server.Application'
 }
 
 bootJar {
@@ -25,5 +25,5 @@ bootJar {
 bootRun {
     main = mainClassStr
     systemProperties = System.properties as Map<String, ?>
-    jvmArgs = ["-Dserver.port=8084", "-Dapollo.app.id=callback", "-Dapollo.configService=http://apollo-configservice.wb-dev.com:30002/", "-Dwb.appname=callback", "-Dwb.env=develop", "-Dspring.profiles.active=local,default"]
+    jvmArgs = ["-Dserver.port=8084", "-Dspring.profiles.active=local,default"]
 }

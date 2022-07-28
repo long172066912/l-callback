@@ -22,7 +22,7 @@ apply from: "dep.gradle"
 // 项目中所有 module 的默认 group 和 version ，module 的build 中自己声明，可以进行覆盖
 allprojects {
     version= '1.0-SNAPSHOT'
-    group= 'com.wb.pf'
+    group= 'com.l.callback'
 }
 
 // 所有子模块的配置
@@ -64,12 +64,12 @@ subprojects {
 
     // 全局的默认依赖
     dependencies {
-        compile project(':rpc:wb-rpc-common')
         // lombok
         annotationProcessor "org.projectlombok:lombok"
         implementation "org.projectlombok:lombok"
 
-        implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
+        implementation group: 'org.apache.commons', name: 'commons-lang3'
+        implementation group: 'org.apache.commons', name: 'commons-collections4'
 
         // mapstruct
         implementation 'org.mapstruct:mapstruct'

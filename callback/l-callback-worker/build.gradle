@@ -1,0 +1,22 @@
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    api project(':callback:impl:l-callback-default-service')
+}
+ext {
+    mainClassStr = 'com.callback.base.worker.Application'
+}
+bootJar {
+    manifest {
+        attributes 'Start-Class': mainClassStr
+    }
+    mainClassName = mainClassStr
+}
+
+
+bootRun {
+    main = mainClassStr
+    systemProperties = System.properties as Map<String, ?>
+    jvmArgs = ["-Dspring.profiles.active=local,default"]
+}

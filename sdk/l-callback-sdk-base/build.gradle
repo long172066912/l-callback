@@ -1,0 +1,7 @@
+
+dependencies {
+    api project(':callback:l-callback-common')
+    api project(':callback:l-callback-rpc-client')
+    api project(':rpc:l-rpc-client')
+    implementation group: 'com.google.guava', name: 'guava'
+}

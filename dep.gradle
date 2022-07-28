@@ -10,5 +10,10 @@ ext.dependencyManagementCustom = {
             entry 'aspectjweaver'
         }
         dependency 'javax.validation:validation-api:2.0.1.Final'
+        dependency group: 'com.google.guava', name: 'guava', version: '31.1-jre'
+        dependency group: 'com.squareup.okhttp3', name: 'okhttp', version: '3.14.9'
+        dependency group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
+        dependency group: 'org.apache.commons', name: 'commons-collections4', version: '4.4'
+        dependency group: 'io.micrometer', name: 'micrometer-core', version: '1.7.6'
     }
 }

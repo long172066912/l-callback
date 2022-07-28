@@ -1,0 +1,6 @@
+dependencies {
+    compile project(':rpc:l-rpc-common')
+    implementation('org.springframework.boot:spring-boot-starter-web')
+    implementation group: 'com.squareup.okhttp3', name: 'okhttp'
+    implementation group: 'io.micrometer', name: 'micrometer-core'
+}
