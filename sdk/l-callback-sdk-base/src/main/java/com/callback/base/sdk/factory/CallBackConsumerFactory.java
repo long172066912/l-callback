@@ -1,15 +1,14 @@
 package com.callback.base.sdk.factory;
 
+import com.callback.base.constants.CallBackConstants;
+import com.callback.base.constants.CallBackPlatformTypeEnums;
+import com.callback.base.model.consumer.CallBackConsumerMessageBO;
 import com.callback.base.sdk.annotations.CallBackConsumerParameter;
+import com.callback.base.sdk.consumer.CallBackConsumer;
 import com.callback.base.sdk.properties.CallBackProperties;
 import com.callback.base.sdk.properties.ConsumerMqTopic;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
-import com.callback.base.constants.CallBackConstants;
-import com.callback.base.constants.CallBackPlatformTypeEnums;
-import com.callback.base.model.consumer.CallBackConsumerMessageBO;
-import com.callback.base.sdk.consumer.CallBackConsumer;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -19,7 +18,6 @@ import org.apache.commons.lang3.StringUtils;
  * @Description: 回调消费工厂
  * @date 2022/5/31 11:31 AM
  */
-@Slf4j
 public class CallBackConsumerFactory {
 
     private static Table<CallBackPlatformTypeEnums, String, CallBackConsumer> table = HashBasedTable.create();
@@ -40,7 +38,6 @@ public class CallBackConsumerFactory {
      * @param <T>
      */
     public static synchronized <T> void regsiter(CallBackPlatformTypeEnums platformType, String businessType, CallBackConsumer<T> consumer) {
-        log.info("new callback register ! platformType : {} , businessType : {} , consumer : {}", platformType, businessType, consumer.getClass().getSimpleName());
         table.put(platformType, businessType, consumer);
     }
 
@@ -54,7 +51,6 @@ public class CallBackConsumerFactory {
         if (null == annotation || null == annotation.businessType() || null == annotation.platformType() || null == annotation.callbackType()) {
             throw new Throwable("CallBackConsumer 必须使用注解 @CallBackConsumerParameter 标注 Consumer [ 平台 | 业务场景 | 回调方式]");
         }
-        log.info("register callback consumer , platformType : {} , businessType : {} , consumerName : {}", annotation.platformType(), annotation.businessType(), consumer.getClass().getSimpleName());
         //将回调消费根据平台+业务场景注册到工厂
         CallBackConsumerFactory.regsiter(annotation.platformType(), annotation.businessType(), consumer);
         switch (annotation.callbackType()) {

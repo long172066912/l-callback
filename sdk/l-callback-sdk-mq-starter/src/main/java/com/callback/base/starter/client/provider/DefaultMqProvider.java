@@ -1,5 +1,7 @@
 package com.callback.base.starter.client.provider;
 
+import com.callback.base.mq.MqClient;
+import com.callback.base.mq.MqConsumer;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.callback.base.constants.CallBackPlatformTypeEnums;
 import com.callback.base.model.consumer.CallBackConsumerMessageBO;
@@ -42,7 +44,7 @@ public class DefaultMqProvider implements CallBackMqProvider {
 
     @Override
     public void start() {
-        mqConsumer = new MqConsumer(
+        mqConsumer = MqClient.consume(
                 topic.getGroup(),
                 topic.getTopic(),
                 value -> {

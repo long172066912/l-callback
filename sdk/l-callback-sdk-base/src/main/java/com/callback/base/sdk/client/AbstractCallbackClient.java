@@ -9,8 +9,6 @@ import com.callback.base.sdk.exception.CallBackFailException;
 import com.l.rpc.exception.BaseBusinessException;
 import com.l.rpc.factory.RpcFactory;
 import com.l.rpc.json.LJSON;
-import com.sun.org.slf4j.internal.Logger;
-import com.sun.org.slf4j.internal.LoggerFactory;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
@@ -24,8 +22,6 @@ import java.util.function.Supplier;
  * @date 2022/5/31 10:26 AM
  */
 public abstract class AbstractCallbackClient implements BaseCallbackClient {
-
-    private static Logger LOGGER = LoggerFactory.getLogger(AbstractCallbackClient.class);
 
     protected static CallBackRpcClient callBackRpcClient = RpcFactory.getInstance().getService(CallBackRpcClient.class);
 
@@ -75,7 +71,6 @@ public abstract class AbstractCallbackClient implements BaseCallbackClient {
                 || StringUtils.isBlank(callBackProtocol.getMessageId())
                 || null == data
         ) {
-            LOGGER.error("callbackSync callback fail ! params error ! callBackProtocol : {} , data : {}", LJSON.toJson(callBackProtocol), LJSON.toJson(data));
             throw new CallBackFailException();
         }
     }
@@ -94,11 +89,9 @@ public abstract class AbstractCallbackClient implements BaseCallbackClient {
         try {
             return supplier.get();
         } catch (BaseBusinessException ex) {
-            LOGGER.error("callbackSync callback fail ! BaseBusinessException !", ex);
-            throw new CallBackFailException();
+            throw new CallBackFailException(ex.getMessage());
         } catch (Exception e) {
-            LOGGER.error("callbackSync callback fail !", e);
-            throw new CallBackFailException();
+            throw new CallBackFailException(e.getMessage());
         }
     }
 }

@@ -81,7 +81,9 @@ subprojects {
     if (!project.name.contains("-common") || !project.name.contains("-model")) {
 
         // service 是属于内部包不能使用 spring-boot-gradle 的插件，如果使用的话会造成依赖有问题
-        if (!project.name.contains("-service") && !project.name.contains("-starter") && !project.name.contains("-test")) {
+        if (project.name.contains("-server")
+                || project.name.contains("-worker")
+                || project.name.contains("test-")) {
             // 应用 spring-boot-gradle 的插件
             apply plugin: "org.springframework.boot"
         }

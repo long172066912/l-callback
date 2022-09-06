@@ -8,4 +8,9 @@ package com.callback.base.sdk.exception;
 * @version V1.0
 */
 public class CallBackFailException extends Throwable {
+    public CallBackFailException() {
+    }
+    public CallBackFailException(String message) {
+        super(message);
+    }
 }

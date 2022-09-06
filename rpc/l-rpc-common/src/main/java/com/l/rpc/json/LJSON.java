@@ -76,7 +76,7 @@ public class LJSON {
      * @return
      */
     @SneakyThrows
-    public static <T> T fromJson(String json, TypeReference valueTypeRef) {
+    public static <T> T fromJson(String json, TypeReference<T> valueTypeRef) {
         return defaultMapper.readValue(json, valueTypeRef);
     }
 

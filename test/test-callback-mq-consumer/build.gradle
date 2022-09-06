@@ -3,8 +3,8 @@
 dependencies {
 
     //运维监控点
-    implementation ':rpc:l-rpc-server'
-    implementation project(':sdk:l-callback-sdk-mq-starter')
+    api project(':rpc:l-rpc-server')
+    api project(':sdk:l-callback-sdk-mq-starter')
     implementation('io.micrometer:micrometer-registry-prometheus')
     implementation('org.springframework.boot:spring-boot-starter-web')
     implementation('org.springframework.boot:spring-boot-starter-validation')

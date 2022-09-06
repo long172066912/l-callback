@@ -1,5 +1,6 @@
 package com.callback.base.extend.callback.dispatch.handle;
 
+import com.callback.base.mq.MqClient;
 import com.callback.base.service.callback.dispatch.handle.CallBackRetryHandler;
 import com.callback.base.service.callback.dispatch.handle.model.CallBackStatus;
 import com.callback.base.service.callback.model.CallBackMessage;
@@ -25,7 +26,7 @@ public class MqRetryHandlerImpl implements CallBackRetryHandler {
     @Override
     public CallBackStatus retry(CallBackMessage callBackMessage, Long delayTime, TimeUnit timeUnit) {
         try {
-            Boolean r = MqProducer.send(CALL_BACK_RETRY, LJSON.toJson(callBackMessage), delayTime, timeUnit).get();
+            Boolean r = MqClient.send(CALL_BACK_RETRY.getTopic(), LJSON.toJson(callBackMessage), delayTime, timeUnit);
             if (!r) {
                 log.error("MqRetryHandlerImpl send RocketMq fail ! messageId : {}", callBackMessage.getMessageId());
                 return CallBackStatus.FAIL;

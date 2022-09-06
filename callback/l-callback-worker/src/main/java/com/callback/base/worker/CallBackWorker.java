@@ -3,6 +3,7 @@ package com.callback.base.worker;
 import com.callback.base.constants.CallBackPlatformTypeEnums;
 import com.callback.base.constants.MqTopicEnums;
 import com.callback.base.extend.infra.CallBackMessageDaoRepository;
+import com.callback.base.mq.MqClient;
 import com.callback.base.service.backpressure.constants.BackPressureEnums;
 import com.callback.base.service.callback.dispatch.BaseCallBackDispatch;
 import com.callback.base.service.callback.dispatch.CallBackAsyncDispatch;
@@ -36,12 +37,12 @@ public class CallBackWorker implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) {
         log.info("callback worker start...");
-        //kafka快慢队列,TODO 引入自己的kafka消费组件
-        new MqConsumer(MqTopicEnums.KAFKA_FAST_CALLBACK.getGroupName(), MqTopicEnums.KAFKA_FAST_CALLBACK.getTopic(), value -> callBackAsyncDispatch.asyncCallBack(BackPressureEnums.FAST, LJSON.fromJson(value, CallBackMessage.class)));
-        new MqConsumer(MqTopicEnums.KAFKA_SLOW_CALLBACK.getGroupName(), MqTopicEnums.KAFKA_SLOW_CALLBACK.getTopic(), value -> callBackAsyncDispatch.asyncCallBack(BackPressureEnums.SLOW, LJSON.fromJson(value, CallBackMessage.class)));
+        //kafka快慢队列
+        MqClient.consume(MqTopicEnums.KAFKA_FAST_CALLBACK.getGroupName(), MqTopicEnums.KAFKA_FAST_CALLBACK.getTopic(), value -> callBackAsyncDispatch.asyncCallBack(BackPressureEnums.FAST, LJSON.fromJson(value, CallBackMessage.class)));
+        MqClient.consume(MqTopicEnums.KAFKA_SLOW_CALLBACK.getGroupName(), MqTopicEnums.KAFKA_SLOW_CALLBACK.getTopic(), value -> callBackAsyncDispatch.asyncCallBack(BackPressureEnums.SLOW, LJSON.fromJson(value, CallBackMessage.class)));
 
-        //重试 TODO 引入自己的重试消费
-        new MqConsumer(MqTopicEnums.CALL_BACK_RETRY, MqTopicEnums.CALL_BACK_RETRY.getTopic(), value -> callBackDispatch.callBack(LJSON.fromJson(value, CallBackMessage.class)));
+        //重试
+        MqClient.consume(MqTopicEnums.CALL_BACK_RETRY.getGroupName(), MqTopicEnums.CALL_BACK_RETRY.getTopic(), value -> callBackDispatch.callBack(LJSON.fromJson(value, CallBackMessage.class)));
 
         //DB循环修补，1秒查一次
         CallBackAsyncExecutorUtils.submitScheduledTask(() -> {

@@ -3,6 +3,7 @@ package com.callback.base.extend.callback.adapter.mq.test;
 import com.callback.base.constants.CallBackPlatformTypeEnums;
 import com.callback.base.model.CallBackType;
 import com.callback.base.model.consumer.CallBackConsumerMessageBO;
+import com.callback.base.mq.MqClient;
 import com.callback.base.service.callback.adapter.AbstractCallBackAdapter;
 import com.callback.base.service.callback.dispatch.handle.model.CallBackStatus;
 import com.callback.base.service.callback.model.CallBackMessage;
@@ -35,7 +36,7 @@ public class TestMqAdapter extends AbstractCallBackAdapter {
     @Override
     public CallBackStatus callBack(CallBackMessage callBackMessage) throws CallBackTimeoutException {
         try {
-            Boolean r = MqProducer.send(callBackMessage.getCallBackConfig().getTopic(),
+            boolean r = MqClient.send(callBackMessage.getCallBackConfig().getTopic(),
                     LJSON.toJson(
                             CallBackConsumerMessageBO.builder()
                                     .platformType(callBackMessage.getPlatformType())
@@ -44,7 +45,7 @@ public class TestMqAdapter extends AbstractCallBackAdapter {
                                     .data(callBackMessage.getMessage())
                                     .build()
                     )
-            ).get();
+            );
             if (!r) {
                 log.error("TestMqAdapter send fail ! messageId : {}", callBackMessage.getMessageId());
                 return CallBackStatus.FAIL;

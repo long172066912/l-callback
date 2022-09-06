@@ -4,6 +4,7 @@ import com.callback.base.constants.CallBackPlatformTypeEnums;
 import com.callback.base.constants.MqTopicEnums;
 import com.callback.base.extend.infra.mapper.CallBackMessageMapper;
 import com.callback.base.extend.infra.model.CallBackMessageDO;
+import com.callback.base.mq.MqClient;
 import com.callback.base.service.backpressure.constants.BackPressureEnums;
 import com.callback.base.service.callback.model.CallBackConfig;
 import com.callback.base.service.callback.model.CallBackMessage;
@@ -46,7 +47,7 @@ public class CallBackMessageRepositoryImpl implements CallBackMessageRepository,
         switch (backPressureEnums) {
             case SLOW:
                 try {
-                    r = MqProducer.send(MqTopicEnums.KAFKA_SLOW_CALLBACK.getTopic(), LJSON.toJson(callBackMessage)).get();
+                    r = MqClient.send(MqTopicEnums.KAFKA_SLOW_CALLBACK.getTopic(), LJSON.toJson(callBackMessage));
                 } catch (Exception e) {
                     log.error("saveCallBackMessage error ! FAST ! callBackMessage : {}", LJSON.toJson(callBackMessage));
                 }
@@ -54,7 +55,7 @@ public class CallBackMessageRepositoryImpl implements CallBackMessageRepository,
             case FAST:
             default:
                 try {
-                    r = MqProducer.send(MqTopicEnums.KAFKA_FAST_CALLBACK.getTopic(), LJSON.toJson(callBackMessage)).get();
+                    r = MqClient.send(MqTopicEnums.KAFKA_FAST_CALLBACK.getTopic(), LJSON.toJson(callBackMessage));
                 } catch (Exception e) {
                     log.error("saveCallBackMessage error ! SLOW ! callBackMessage : {}", LJSON.toJson(callBackMessage));
                 }

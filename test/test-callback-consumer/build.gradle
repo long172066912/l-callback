@@ -2,8 +2,8 @@
 // 定义自己的依赖
 dependencies {
     //运维监控点
-    implementation ':rpc:l-rpc-client'
-    implementation ':rpc:l-rpc-server'
+    api project(':rpc:l-rpc-client')
+    api project(':rpc:l-rpc-server')
     implementation project(':sdk:l-callback-sdk-http-starter')
     implementation('org.springframework.boot:spring-boot-starter-web')
     implementation('org.springframework.boot:spring-boot-starter-validation')

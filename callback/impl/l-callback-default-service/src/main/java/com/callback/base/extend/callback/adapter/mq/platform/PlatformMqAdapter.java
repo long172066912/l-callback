@@ -1,5 +1,7 @@
 package com.callback.base.extend.callback.adapter.mq.platform;
 
+import com.callback.base.mq.MqClient;
+import com.callback.base.mq.MqProducer;
 import com.callback.base.constants.CallBackPlatformTypeEnums;
 import com.callback.base.model.CallBackType;
 import com.callback.base.model.consumer.CallBackConsumerMessageBO;
@@ -37,7 +39,7 @@ public class PlatformMqAdapter extends AbstractCallBackAdapter {
         log.info("平台mq方式回调， messageId : {}", callBackMessage.getMessageId());
         try {
             //TODO 使用自己的MQ组件
-            Boolean r = MqProducer.send(callBackMessage.getCallBackConfig().getTopic(),
+            Boolean r = MqClient.send(callBackMessage.getCallBackConfig().getTopic(),
                     LJSON.toJson(
                             CallBackConsumerMessageBO.builder()
                                     .platformType(callBackMessage.getPlatformType())
@@ -46,7 +48,7 @@ public class PlatformMqAdapter extends AbstractCallBackAdapter {
                                     .data(callBackMessage.getMessage())
                                     .build()
                     )
-            ).get();
+            );
             if (!r) {
                 log.error("PlatformMqAdapter send fail ! messageId : {}", callBackMessage.getMessageId());
                 return CallBackStatus.FAIL;
