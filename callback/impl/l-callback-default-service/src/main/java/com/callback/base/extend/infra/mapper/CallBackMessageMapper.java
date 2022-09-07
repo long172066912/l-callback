@@ -5,10 +5,12 @@ import com.callback.base.extend.infra.model.CallBackMessageDO;
 import org.apache.ibatis.annotations.*;
 
 /**
- * @author liuxiaofeng
- * description QQ登录绑定信息
- * @date 14:29 2022/4/18
- **/
+* @Title: CallBackMessageMapper
+* @Description: 回调消息db存储
+* @author JerryLong
+* @date 2022/9/7 15:52
+* @version V1.0
+*/
 @Mapper
 public interface CallBackMessageMapper extends BaseMapper<CallBackMessageDO> {
 
